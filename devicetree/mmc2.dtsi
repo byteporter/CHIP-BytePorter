@@ -1,9 +1,3 @@
-/dts-v1/;
-/plugin/;
-
-#include "/usr/src/linux/arch/arm/boot/dts/sun5i-r8.dtsi"
-#include "/usr/src/linux/arch/arm/boot/dts/sunxi-common-regulators.dtsi"
-
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
 

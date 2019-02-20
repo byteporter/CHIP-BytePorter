@@ -14,13 +14,16 @@ LINUX_SRCDIR ?= /usr/src/linux
 
 .PHONY: all clean
 
-all: mmc2.dtbo
+all: sun5i-r8-chip-byteporter.dtbo
 
 clean:
-	rm mmc2.dtbo mmc2.dts.preprocessed
+	rm sun5i-r8-chip-byteporter.dtbo
 
 %.dts.preprocessed: %.dts
-	${CPREPROCESSOR} -nostdinc -I${LINUX_SRCDIR}/include -I${LINUX_SRCDIR}/arch -undef -x assembler-with-cpp $< $@
+	${CPREPROCESSOR} -nostdinc -I${LINUX_SRCDIR}/include -I${LINUX_SRCDIR}/arch -I${LINUX_SRCDIR}/arch/arm/boot/dts -undef -x assembler-with-cpp $< $@
 
 %.dtbo: %.dts.preprocessed
 	dtc -I dts -O dtb -o $@ $<
+
+%.dtb: %.dts.preprocessed
+	dtc -@ -I dts -O dtb -o $@ $<

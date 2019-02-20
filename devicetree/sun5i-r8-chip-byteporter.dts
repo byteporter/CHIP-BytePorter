@@ -1,0 +1,5 @@
+/dts-v1/;
+/plugin/;
+
+#include "mmc2.dtsi"
+#include "gpu.dtsi"
