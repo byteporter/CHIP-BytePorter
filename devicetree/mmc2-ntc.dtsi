@@ -31,14 +31,17 @@
 		__overlay__ {
 			vmmc-supply = <&reg_vcc3v3>;
 			vqmmc-supply = <&reg_vcc3v3>;
-			// everything below this like is default, but I'll set it to be sure
+
 			pinctrl-names = "default";
 			compatible = "allwinner,sun5i-a13-mmc";
 			pinctrl-0 = <&chip_sdio_pins>;
 
 			bus-width = <4>;
       clocks = <&ahb_gates 10>,<&mmc2_clk 0>,<&mmc2_clk 1>,<&mmc2_clk 2>;
-			// and go!
+
+			// SD adapter doesn't have a chip detect switch so use polling
+			broken-cd;
+
 			status = "okay";
 		};
 	};
