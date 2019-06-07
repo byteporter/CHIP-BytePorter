@@ -9,18 +9,18 @@ MAG=\e[1;35m
 CYN=\e[1;36m
 END=\e[0m
 
-CPREPROCESSOR ?= cpp
-LINUX_SRCDIR ?= /usr/src/linux
+LINUX_SRCDIR = /usr/src/linux
+BUILD_FILES = sun5i-r8-chip-byteporter.dtbo
 
 .PHONY: all clean
 
-all: sun5i-r8-chip-byteporter.dtbo
+all: $(BUILD_FILES)
 
 clean:
 	rm sun5i-r8-chip-byteporter.dtbo
 
 %.dts.preprocessed: %.dts
-	${CPREPROCESSOR} -nostdinc -I${LINUX_SRCDIR}/include -I${LINUX_SRCDIR}/arch -I${LINUX_SRCDIR}/arch/arm/boot/dts -undef -x assembler-with-cpp $< $@
+	$(CPP) -nostdinc -I$(LINUX_SRCDIR)/include -I$(LINUX_SRCDIR)/arch -I$(LINUX_SRCDIR)/arch/arm/boot/dts -undef -x assembler-with-cpp $< $@
 
 %.dtbo: %.dts.preprocessed
 	dtc -I dts -O dtb -o $@ $<
