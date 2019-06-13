@@ -1,0 +1,18 @@
+MKINITRD = /sbin/mkinitrd
+MODULES = ext4 r8723bs dm-snapshot sunxi_mmc mmc_block crc32c
+
+EMPTY :=
+SPACE := $(EMPTY) $(EMPTY)
+MODULES_LIST = $(subst $(SPACE),:,$(MODULES))
+
+OS_ZIMAGE_PATTERN = -$(shell printf %s "$(VERSION)" | awk 'BEGIN {FS="-";} {print $$2"-"$$1;}')
+
+INCLUDED_BUILD_TARGETS = initrd$(FILENAME_PATTERN) zImage$(FILENAME_PATTERN)
+
+initrd$(FILENAME_PATTERN):
+	@printf '$(CYN)Building $(YEL)$@$(END)\n'
+	$(MKINITRD) -c -k '$(VERSION)' -m '$(MODULES_LIST)' -f ext4 -r '$(ROOTPART)' -L -o $@
+
+zImage$(FILENAME_PATTERN): zImage$(OS_ZIMAGE_PATTERN)
+	@printf '$(CYN)Building $(YEL)$@$(END)\n'
+	cp $^ $@

@@ -1,0 +1,15 @@
+MKINITCPIO = /sbin/mkinitcpio
+
+INCLUDED_BUILD_TARGETS = initrd$(FILENAME_PATTERN) zImage$(FILENAME_PATTERN)
+
+initramfs-linux.img:
+	@printf '$(CYN)Building $(YEL)$@$(END)\n'
+	$(MKINITCPIO) -k $(VERSION) -g $@
+
+initrd$(FILENAME_PATTERN): initramfs-linux.img
+	@printf '$(CYN)Building $(YEL)$@$(END)\n'
+	cp $^ $@
+
+zImage$(FILENAME_PATTERN): zImage
+	@printf '$(CYN)Building $(YEL)$@$(END)\n'
+	cp $^ $@
