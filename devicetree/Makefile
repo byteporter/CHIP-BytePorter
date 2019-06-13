@@ -19,8 +19,8 @@ all: $(BUILD_FILES)
 clean:
 	rm sun5i-r8-chip-byteporter.dtbo
 
-%.dts.preprocessed: %.dts
-	$(CPP) -nostdinc -I$(LINUX_SRCDIR)/include -I$(LINUX_SRCDIR)/arch -I$(LINUX_SRCDIR)/arch/arm/boot/dts -undef -x assembler-with-cpp $< $@
+%.dts.preprocessed: %.dts mmc2.dtsi nand.dtsi gpu.dtsi
+	$(CPP) -nostdinc -I$(LINUX_SRCDIR)/include -I$(LINUX_SRCDIR)/arch -I$(LINUX_SRCDIR)/arch/arm/boot/dts -undef -x assembler-with-cpp $< >$@
 
 %.dtbo: %.dts.preprocessed
 	dtc -I dts -O dtb -o $@ $<

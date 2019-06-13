@@ -3,3 +3,4 @@
 
 #include "mmc2.dtsi"
 #include "gpu.dtsi"
+#include "nand.dtsi"

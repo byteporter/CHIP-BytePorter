@@ -1,0 +1,41 @@
+/dts-v1/;
+/plugin/;
+
+/{
+  compatible = "nextthing,chip", "allwinner,sun5i-r8";
+  fragment@0 {
+    target = <&nfc>;
+
+    __overlay {
+      status = "okay";
+      pinctrl-names = "default";
+      pinctrl-0 = <&nand_pins_a>, <&nand_cs0_pins_a>, <&nand_rb0_pins_a>;
+      
+      nand@0 {
+        reg = <0x0>;
+        allwinner,rb = <0x0>;
+        nand-ecc-mode = "hw";
+
+        #address-cells = <2>;
+        #size-cells = <2>;
+
+        spl@0 {
+          label = "SPL";
+          reg = <0x0>, <0x0>, <0x0>, <0x00400000>;
+        };
+        spl-backup@0 {
+          label = "SPL.backup";
+          reg = <0x0>, <0x00400000>, <0x0>, <0x00400000>;
+        };
+        u-boot@0 {
+          label = "U-Boot";
+          reg = <0x0>, <0x00800000>, <0x0>, <0x00400000>;
+        };
+        u-boot-backup@0 {
+          label ="U-Boot.backup";
+          reg = <0x0>, <0x00c00000>, <0x0>, <0x00400000>;
+        };
+      };
+    };
+  };
+};
