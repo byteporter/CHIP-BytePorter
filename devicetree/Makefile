@@ -9,21 +9,40 @@ MAG=\e[1;35m
 CYN=\e[1;36m
 END=\e[0m
 
-LINUX_SRCDIR = /usr/src/linux
-BUILD_FILES = sun5i-r8-chip-byteporter.dtbo
+UBOOT_SRCDIR = ../../../../denx.de/u-boot
+BUILD_FILES = gpu.dtbo mmc2.dtbo nand.dtbo pocketchip-v72.dtbo pocketchip-v73.dtbo sun5i-r8-chip.dtb
+
+DTC = $(UBOOT_SRCDIR)/scripts/dtc/dtc
 
 .PHONY: all clean
 
 all: $(BUILD_FILES)
 
 clean:
-	rm sun5i-r8-chip-byteporter.dtbo
+	$(RM) $(BUILD_FILES) sun5i-r8-chip.dts.preprocessed
 
-%.dts.preprocessed: %.dts mmc2.dtsi nand.dtsi gpu.dtsi
-	$(CPP) -nostdinc -I$(LINUX_SRCDIR)/include -I$(LINUX_SRCDIR)/arch -I$(LINUX_SRCDIR)/arch/arm/boot/dts -undef -x assembler-with-cpp $< >$@
+$(DTC):
+	$(MAKE) -C $(UBOOT_SRCDIR) scripts
 
-%.dtbo: %.dts.preprocessed
-	dtc -I dts -O dtb -o $@ $<
+define RUN-CPP =
+$(CPP) -nostdinc -I$(UBOOT_SRCDIR)/include -I$(UBOOT_SRCDIR)/arch/arm/dts -undef -x assembler-with-cpp $< >$@
+endef
 
-%.dtb: %.dts.preprocessed
-	dtc -@ -I dts -O dtb -o $@ $<
+sun5i-r8-chip.dts.preprocessed: $(UBOOT_SRCDIR)/arch/arm/dts/sun5i-r8-chip.dts
+	$(RUN-CPP)
+
+%.dts.preprocessed: %.dts
+	$(RUN-CPP)
+
+define RUN-DTC =
+$(DTC) -@ -I dts -O dtb -o $@ $<
+endef
+
+%.dtbo: %.dts.preprocessed $(DTC)
+	$(RUN-DTC)
+
+sun5i-r8-chip.dtb: sun5i-r8-chip.dts.preprocessed $(DTC)
+	$(RUN-DTC)
+
+%.dtb: %.dts.preprocessed $(DTC)
+	$(RUN-DTC)

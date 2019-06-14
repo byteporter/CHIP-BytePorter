@@ -1,0 +1,34 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/sun4i-a10.h>
+
+/ {
+	compatible = "nextthing,chip", "allwinner,sun5i-r8";
+	
+	fragment@0 {
+		target = <&pio>;
+		__overlay__ {
+			mmc2_pins_b: mmc2@0 {
+				pins = "PE4", "PE5", "PE6", "PE7", "PE8", "PE9";
+				function = "mmc2";
+				drive-strength = <SUN4I_PINCTRL_30_MA>;
+				bias-pull-up;
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&mmc2>;
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <&mmc2_pins_b>;
+			vmmc-supply = <&reg_vcc3v3>;
+			vqmmc-supply = <&reg_vcc3v3>;
+			bus-width = <4>;
+			broken-cd;
+			status = "okay";
+		};
+	};
+};

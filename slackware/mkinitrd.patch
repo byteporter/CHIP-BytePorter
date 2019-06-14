@@ -1,0 +1,4 @@
+737c737
+<           LINE="$(echo "modprobe -v $(basename ${SRCMOD%%.gz} .ko)" )"
+---
+>           LINE="$(echo "modprobe -v $(basename ${SRCMOD%%.xz} .ko)" )"
