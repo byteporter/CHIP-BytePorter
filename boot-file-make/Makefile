@@ -16,6 +16,7 @@ FILENAME_PATTERN = -$(DISTRO)-$(VERSION)
 
 BUILD_TARGETS = boot$(FILENAME_PATTERN).scr uinitrd$(FILENAME_PATTERN) zImage$(FILENAME_PATTERN)
 
+DEVICE_TREE = sun5i-r8-chip.dtb
 OVERLAYS = mmc2 gpu pocketchip-v73
 OVERLAY_CNT = $(words $(OVERLAYS))
 
@@ -45,6 +46,7 @@ boot$(FILENAME_PATTERN).cmd: boot.cmd.m4
 	@printf '$(CYN)Building $(YEL)$@$(END)\n'
 	$(M4) -P \
 	-D__ROOTPART='$(ROOTPART)' \
+	-D__DEVICE_TREE='$(DEVICE_TREE)' \
 	-D__OVERLAYS='$(subst $(SPACE),$(COMMA),$(OVERLAYS))' \
 	-D__OVERLAY_CNT='$(OVERLAY_CNT)' \
 	-D__ADDITIONAL_BOOTARGS='$(ADDITIONAL_BOOTARGS)' \
