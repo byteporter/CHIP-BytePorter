@@ -1,0 +1,8 @@
+7c7
+< # Compiler: arm-slackware-linux-gnueabihf-gcc (GCC) 9.1.0
+---
+> # Compiler: gcc (GCC) 9.1.0
+7265c7265
+< # CONFIG_RTL8723BS is not set
+---
+> CONFIG_RTL8723BS=m
