@@ -1,4 +1,4 @@
-m4_divert(-1)
+m4_divert(`-1')
 # This is an M4 tempalte file for generating the boot scripts for U-Boot. 
 # Macros are defined in the recipe for boot.*.cmd files in the Makefile and
 # passed in through the command line switches. __ROOTPART defaults to the
