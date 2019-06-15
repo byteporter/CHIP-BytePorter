@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 
 # Slackware build script for <appname>
 
@@ -48,7 +48,7 @@
 #
 # |-----------------------------------------------------------------| #
 
-PRGNAM=r8723bs-driver			# replace with name of program
+PRGNAM=r8723bs			# replace with name of program
 VERSION=${VERSION:-$(uname -r | cut -d'-' -f1)}	# replace with version of program
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}		# the "_SBo" is required
@@ -107,6 +107,7 @@ make -C . M=drivers/staging/rtl8723bs
 mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/staging/rtl8723bs
 cp drivers/staging/rtl8723bs/r8723bs.ko $PKG/lib/modules/$VERSION/kernel/drivers/staging/rtl8723bs/
 cd ..
+pwd
 umount linux
 
 # Your application will probably need different cmake flags; these are only
@@ -149,7 +150,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 # The included documentation varies from one application to another, so be sure
 # to adjust your script as needed
 # Also, include the SlackBuild script in the documentation directory
-# mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 # cp -a \
 #   <documentation> \
 #   $PKG/usr/doc/$PRGNAM-$VERSION
