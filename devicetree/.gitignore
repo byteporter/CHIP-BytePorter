@@ -1,2 +1,4 @@
 *.dtbo
 *.dtb
+*.dts.preprocessed
+byteporter-devicetree.tar.gz
