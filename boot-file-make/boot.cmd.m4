@@ -6,12 +6,10 @@ m4_divert(-1)
 # empty but both may be specified using environment variables when calling
 # make, eg: 
 #   $ ROOTPART=/dev/sda1 ADDITIONAL_BOOTARGS='cma=96M' make boot.linux-4.19.cmd
-
-m4_define(`__overlay', `defn(format(``__overlay[%d]'', `$1'))')
-m4_include(`foreachq.m4')
-m4_divert(0)m4_dnl
-setexpr fdto_addr_r $fdt_addr_r + f000
-foreachq(`x', `boobs, and, stuff', `setexpr x')
+m4_include(`macros.m4')
+m4_divert`'m4_dnl
+m4_forloop(`i', `1', `3', `setexpr __overlay(i)_addr_r $fdt_addr_r + f000
+')`'m4_dnl
 setenv initrd_addr_r 0x44000000
 setenv bootargs root=__ROOTPART ro __ADDITIONAL_BOOTARGS
 

@@ -16,7 +16,12 @@ FILENAME_PATTERN = -$(DISTRO)-$(VERSION)
 
 BUILD_TARGETS = boot$(FILENAME_PATTERN).scr uinitrd$(FILENAME_PATTERN) zImage$(FILENAME_PATTERN)
 
-OVERLAYS = mmc2.dtbo, gpu.dtbo, pocketchip-v73.dtbo
+OVERLAYS = mmc2 gpu pocketchip-v73
+OVERLAY_CNT = $(words $(OVERLAYS))
+
+NOOP=
+SPACE=$(NOOP) $(NOOP)
+COMMA=$(NOOP), $(NOOP)
 
 .PHONY: clean all initrd uinitrd install install-default
 
@@ -40,7 +45,8 @@ boot$(FILENAME_PATTERN).cmd: boot.cmd.m4
 	@printf '$(CYN)Building $(YEL)$@$(END)\n'
 	$(M4) -P \
 	-D__ROOTPART='$(ROOTPART)' \
-	-D__OVERLAYS='$(OVERLAYS)' \
+	-D__OVERLAYS='$(subst $(SPACE),$(COMMA),$(OVERLAYS))' \
+	-D__OVERLAY_CNT='$(OVERLAY_CNT)' \
 	-D__ADDITIONAL_BOOTARGS='$(ADDITIONAL_BOOTARGS)' \
 	-D__FILENAME_PATTERN='$(FILENAME_PATTERN)' \
 	$^ >$@
