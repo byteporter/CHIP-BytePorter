@@ -106,6 +106,8 @@ make scripts prepare modules_prepare
 make -C . M=drivers/staging/rtl8723bs
 mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/staging/rtl8723bs
 cp drivers/staging/rtl8723bs/r8723bs.ko $PKG/lib/modules/$VERSION/kernel/drivers/staging/rtl8723bs/
+cd ..
+umount linux
 
 # Your application will probably need different cmake flags; these are only
 # examples.  You might use 'ccmake' to see the available flags...
