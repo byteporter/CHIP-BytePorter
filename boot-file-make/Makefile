@@ -17,7 +17,7 @@ FILENAME_PATTERN = -$(DISTRO)-$(VERSION)
 BUILD_TARGETS = boot$(FILENAME_PATTERN).scr uinitrd$(FILENAME_PATTERN) zImage$(FILENAME_PATTERN)
 
 DEVICE_TREE = sun5i-r8-chip.dtb
-OVERLAYS = mmc2 gpu pocketchip-v73
+OVERLAYS = mmc2 gpu pocketchip_v73
 OVERLAY_CNT = $(words $(OVERLAYS))
 
 NOOP=
