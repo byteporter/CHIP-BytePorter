@@ -6,7 +6,7 @@ M4 = /usr/bin/m4
 MKIMAGE = /usr/bin/mkimage
 
 ROOTPART = $(shell mount | awk 'BEGIN{FS=" on "} / on \/ / {print $$1;}')
-BOOTDIR = /boot
+BOOTDIR = /boot/bootpart
 ADDITIONAL_BOOTARGS =
 
 DISTRO = $(shell source /etc/os-release; echo "$${ID}")
@@ -15,6 +15,8 @@ VERSION = $(shell uname -r)
 FILENAME_PATTERN = -$(DISTRO)-$(VERSION)
 
 BUILD_TARGETS = boot$(FILENAME_PATTERN).scr uinitrd$(FILENAME_PATTERN) zImage$(FILENAME_PATTERN)
+
+OVERLAYS = mmc2.dtbo, gpu.dtbo, pocketchip-v73.dtbo
 
 .PHONY: clean all initrd uinitrd install install-default
 
@@ -38,6 +40,7 @@ boot$(FILENAME_PATTERN).cmd: boot.cmd.m4
 	@printf '$(CYN)Building $(YEL)$@$(END)\n'
 	$(M4) -P \
 	-D__ROOTPART='$(ROOTPART)' \
+	-D__OVERLAYS='$(OVERLAYS)' \
 	-D__ADDITIONAL_BOOTARGS='$(ADDITIONAL_BOOTARGS)' \
 	-D__FILENAME_PATTERN='$(FILENAME_PATTERN)' \
 	$^ >$@
