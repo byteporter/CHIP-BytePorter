@@ -1,15 +1,20 @@
 /dts-v1/;
 /plugin/;
 
-// Overlay from nextthingco/dip-pocket-v72.dts (https://github.com/ntc-chip-revived/CHIP-dt-overlays/blob/master/nextthingco/dip-pocket-v72.dts)
+// Overlay from nextthingco/dip-pocket-v73.dts (https://github.com/ntc-chip-revived/CHIP-dt-overlays/blob/master/nextthingco/dip-pocket-v73.dts)
 // These lines are necessary for the PocketCHIP shell to work properly.
 
 #include <dt-bindings/input/input.h>
 
-#include "pocketchip-common.dtsi"
+#include "pocketchip_common.dtsi"
 
 &keyboard {
+	// Very first mapping was 'MATRIX_KEY(0, 0, 13)' originally. I looked it up
+	// in $(UBOOT_SRC)/include/dt-bindings/input/linux-event-codes.h and it looks
+	// like that equats to KEY_EQUAL so I changed it below.
+	
 	linux,keymap = <
+			MATRIX_KEY(0, 0, KEY_EQUAL)
 			MATRIX_KEY(0, 1, KEY_1)
 			MATRIX_KEY(0, 2, KEY_2)
 			MATRIX_KEY(0, 3, KEY_3)
@@ -53,7 +58,7 @@
 			MATRIX_KEY(3, 8, KEY_UP)
 			MATRIX_KEY(3, 9, KEY_DOWN)
 
-			MATRIX_KEY(4, 0, KEY_LEFTSHIFT)
+			MATRIX_KEY(4, 0, KEY_ESC)
 			MATRIX_KEY(4, 1, KEY_RIGHTALT)
 			MATRIX_KEY(4, 2, KEY_LEFTALT)
 			MATRIX_KEY(4, 3, KEY_SPACE)
@@ -63,9 +68,9 @@
 			MATRIX_KEY(4, 8, KEY_LEFT)
 			MATRIX_KEY(4, 9, KEY_RIGHT)
 
-			MATRIX_KEY(5, 0, KEY_ESC)
+			MATRIX_KEY(5, 0, KEY_LEFTSHIFT)
 			MATRIX_KEY(5, 1, KEY_0)
-			MATRIX_KEY(5, 2, KEY_EQUAL)
+			MATRIX_KEY(5, 2, KEY_KPMINUS )
 			MATRIX_KEY(5, 3, KEY_BACKSPACE)
 			MATRIX_KEY(5, 4, KEY_DOT)
 			>;
