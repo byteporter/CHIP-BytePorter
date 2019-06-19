@@ -11,7 +11,7 @@ END=\e[0m
 
 UBOOT_SRCDIR = ../../../../denx.de/u-boot
 OVERLAY_BUILD_FILES = gpu.dtbo mmc2.dtbo nand.dtbo pocketchip_v72.dtbo pocketchip_v73.dtbo
-DT_BUILD_FILES = sun5i-r8-chip.dtb
+DT_BUILD_FILES = sun5i-r8-chip.dtb sun5i-r8-popcorn.dtb
 BUILD_FILES = $(OVERLAY_BUILD_FILES) $(DT_BUILD_FILES)
 INSTALL_PREFIX = .
 
