@@ -49,9 +49,10 @@
 # |-----------------------------------------------------------------| #
 
 PRGNAM=kernel-modules-pocketchip			# replace with name of program
-VERSION=${VERSION:-$(uname -r)}	# replace with version of program
+VERSION=${VERSION:-$(uname -r | cut -d'-' -f1)}	# replace with version of program
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}		# the "_SBo" is required
+MODULE_DIR=${MODULE_DIR:-$(uname -r)}
 
 # Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
@@ -107,23 +108,23 @@ make kernel-modules-pocketchip_defconfig
 make scripts prepare modules_prepare
 
 make -C . M=drivers/staging/rtl8723bs
-mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/staging/rtl8723bs
-cp drivers/staging/rtl8723bs/r8723bs.ko $PKG/lib/modules/$VERSION/kernel/drivers/staging/rtl8723bs/
+mkdir -p $PKG/lib/modules/$MODULE_DIR/kernel/drivers/staging/rtl8723bs
+cp drivers/staging/rtl8723bs/r8723bs.ko $PKG/lib/modules/$MODULE_DIR/kernel/drivers/staging/rtl8723bs/
 
 make -C . M=drivers/mfd
-mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/mfd
+mkdir -p $PKG/lib/modules/$MODULE_DIR/kernel/drivers/mfd
 
 make -C . M=drivers/power/supply
-mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/power/supply
-cp drivers/power/supply/axp20x_ac_power.ko drivers/power/supply/axp20x_usb_power.ko drivers/power/supply/axp20x_battery.ko $PKG/lib/modules/$VERSION/kernel/drivers/power/supply/
+mkdir -p $PKG/lib/modules/$MODULE_DIR/kernel/drivers/power/supply
+cp drivers/power/supply/axp20x_ac_power.ko drivers/power/supply/axp20x_usb_power.ko drivers/power/supply/axp20x_battery.ko $PKG/lib/modules/$MODULE_DIR/kernel/drivers/power/supply/
 
 make -C . M=drivers/iio/adc
-mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/iio/adc
-cp drivers/iio/adc/axp20x_adc.ko $PKG/lib/modules/$VERSION/kernel/drivers/iio/adc/
+mkdir -p $PKG/lib/modules/$MODULE_DIR/kernel/drivers/iio/adc
+cp drivers/iio/adc/axp20x_adc.ko $PKG/lib/modules/$MODULE_DIR/kernel/drivers/iio/adc/
 
 make -C . M=drivers/video/backlight
-mkdir -p $PKG/lib/modules/$VERSION/kernel/drivers/video/backlight
-cp drivers/video/backlight/pwm_bl.ko $PKG/lib/modules/$VERSION/kernel/drivers/video/backlight/
+mkdir -p $PKG/lib/modules/$MODULE_DIR/kernel/drivers/video/backlight
+cp drivers/video/backlight/pwm_bl.ko $PKG/lib/modules/$MODULE_DIR/kernel/drivers/video/backlight/
 
 cd ..
 pwd
