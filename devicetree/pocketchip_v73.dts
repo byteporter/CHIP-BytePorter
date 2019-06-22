@@ -11,7 +11,7 @@
 &keyboard {
 	// Very first mapping was 'MATRIX_KEY(0, 0, 13)' originally. I looked it up
 	// in $(UBOOT_SRC)/include/dt-bindings/input/linux-event-codes.h and it looks
-	// like that equats to KEY_EQUAL so I changed it below.
+	// like that equates to KEY_EQUAL so I changed it below.
 	
 	linux,keymap = <
 			MATRIX_KEY(0, 0, KEY_EQUAL)

@@ -64,7 +64,7 @@
         compatible = "ti,tca8418";
         reg = <0x34>;
         interrupt-parent = <&pio>;
-        interrupts = <6 1 IRQ_TYPE_EDGE_FALLING>;
+        interrupts = <6 1 IRQ_TYPE_LEVEL_LOW>;
 
         keypad,num-rows = <6>;
         keypad,num-columns = <10>;
